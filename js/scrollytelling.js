@@ -1,7 +1,7 @@
-// CONFIGURACIÓN DE FOTOGRAMAS
-const TOTAL_FRAMES = 100;
-const frames = [];
-let loadedCount = 0;
+// CONFIGURACIÓN DE FOTOGRAMAS OPTIMIZADOS (70 FRAMES WEBP · 5.2 MB TOTAL)
+const TOTAL_FRAMES = 70;
+const frames = new Array(TOTAL_FRAMES);
+const loadedSet = new Set();
 let currentFrameIndex = 0;
 
 const canvas = document.getElementById('scrolly-canvas');
@@ -14,54 +14,92 @@ const hudProgress = document.getElementById('hud-progress-bar');
 const hudStage = document.getElementById('hud-stage-name');
 const hudPercent = document.getElementById('hud-percent');
 
-// 1. CARGA PROGRESIVA DE LOS 100 FOTOGRAMAS
-function preloadFrames() {
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+// 1. CARGA PROGRESIVA INSTANTÁNEA (APPLE ARCHITECTURE)
+// Cargamos el primer fotograma de inmediato para desbloquear la pantalla en menos de 0.2s.
+function initInstantLoading() {
+    // A) Cargar Frame 1 prioritario
+    const firstImg = new Image();
+    firstImg.src = `fotogramas_sala/frame_0001.webp`;
+    firstImg.onload = () => {
+        frames[0] = firstImg;
+        loadedSet.add(0);
+        resizeCanvas();
+        renderFrame(0);
+
+        // Desbloquear pantalla INMEDIATAMENTE
+        if (loaderOverlay) {
+            loaderOverlay.style.opacity = '0';
+            setTimeout(() => loaderOverlay.style.display = 'none', 400);
+        }
+
+        // B) Iniciar carga prioritaria de hitos (cada 3 frames)
+        loadPriorityPass();
+    };
+}
+
+function loadPriorityPass() {
+    // Paso 1: Hitos clave para cubrir todo el recorrido de inmediato
+    const priorityIndices = [];
+    for (let i = 0; i < TOTAL_FRAMES; i += 3) {
+        if (i !== 0) priorityIndices.push(i);
+    }
+
+    let pCount = 0;
+    priorityIndices.forEach(idx => {
         const img = new Image();
-        const padIndex = String(i).padStart(4, '0');
-        img.src = `fotogramas_sala/frame_${padIndex}.jpg`;
-
+        const padIndex = String(idx + 1).padStart(4, '0');
+        img.src = `fotogramas_sala/frame_${padIndex}.webp`;
         img.onload = () => {
-            loadedCount++;
-            const pct = Math.floor((loadedCount / TOTAL_FRAMES) * 100);
-            if (loaderBar) loaderBar.style.width = `${pct}%`;
-            if (loaderText) loaderText.innerText = `Cargando fotogramas de la sala... ${pct}%`;
-
-            if (loadedCount === 1) {
-                // Dibujar el primer cuadro de inmediato apenas esté listo
-                resizeCanvas();
-                renderFrame(0);
-            }
-
-            if (loadedCount >= TOTAL_FRAMES) {
-                setTimeout(() => {
-                    if (loaderOverlay) {
-                        loaderOverlay.style.opacity = '0';
-                        setTimeout(() => loaderOverlay.style.visibility = 'hidden', 600);
-                    }
-                }, 300);
+            frames[idx] = img;
+            loadedSet.add(idx);
+            pCount++;
+            if (pCount >= priorityIndices.length) {
+                // Paso 2: Cargar el resto de frames en segundo plano silencioso
+                loadRemainingFrames();
             }
         };
+    });
+}
 
-        img.onerror = () => {
-            console.warn(`Error al cargar el frame ${padIndex}`);
-            loadedCount++;
-        };
-
-        frames.push(img);
+function loadRemainingFrames() {
+    for (let i = 0; i < TOTAL_FRAMES; i++) {
+        if (!frames[i]) {
+            const img = new Image();
+            const padIndex = String(i + 1).padStart(4, '0');
+            img.src = `fotogramas_sala/frame_${padIndex}.webp`;
+            img.onload = () => {
+                frames[i] = img;
+                loadedSet.add(i);
+            };
+        }
     }
 }
 
-// 2. RENDERIZADO DEL FRAME CON AJUSTE COVER (RESPONSIVE)
-function renderFrame(index) {
-    if (!frames[index] || !frames[index].complete) return;
-    const img = frames[index];
+// 2. FUNCIÓN DE RENDERIZADO CON BÚSQUEDA DEL FOTOGRAMA MÁS CERCANO (CERO ESPERA)
+function renderFrame(targetIndex) {
+    let imgToDraw = frames[targetIndex];
+
+    // Si el fotograma exacto aún se está descargando, buscar el más cercano ya disponible
+    if (!imgToDraw || !imgToDraw.complete) {
+        let bestDistance = Infinity;
+        let bestIdx = 0;
+        for (const loadedIdx of loadedSet) {
+            const dist = Math.abs(loadedIdx - targetIndex);
+            if (dist < bestDistance) {
+                bestDistance = dist;
+                bestIdx = loadedIdx;
+            }
+        }
+        imgToDraw = frames[bestIdx];
+    }
+
+    if (!imgToDraw || !imgToDraw.complete) return;
 
     const cWidth = canvas.width;
     const cHeight = canvas.height;
 
-    const imgWidth = img.naturalWidth || 1920;
-    const imgHeight = img.naturalHeight || 1080;
+    const imgWidth = imgToDraw.naturalWidth || 1600;
+    const imgHeight = imgToDraw.naturalHeight || 900;
 
     const hRatio = cWidth / imgWidth;
     const vRatio = cHeight / imgHeight;
@@ -71,10 +109,10 @@ function renderFrame(index) {
     const shiftY = (cHeight - imgHeight * ratio) / 2;
 
     ctx.clearRect(0, 0, cWidth, cHeight);
-    ctx.drawImage(img, 0, 0, imgWidth, imgHeight, shiftX, shiftY, imgWidth * ratio, imgHeight * ratio);
+    ctx.drawImage(imgToDraw, 0, 0, imgWidth, imgHeight, shiftX, shiftY, imgWidth * ratio, imgHeight * ratio);
 }
 
-// 3. SINCRONIZACIÓN CON EL SCROLL (SCROLLYTELLING ENGINE)
+// 3. SINCRONIZACIÓN SUAVE CON EL SCROLL
 let ticking = false;
 
 function onScroll() {
@@ -91,7 +129,7 @@ function onScroll() {
                 renderFrame(currentFrameIndex);
             }
 
-            // Actualizar HUD de progreso
+            // HUD
             const pctText = Math.floor(scrollFraction * 100);
             if (hudProgress) hudProgress.style.width = `${pctText}%`;
             if (hudPercent) hudPercent.innerText = `${pctText}%`;
@@ -104,7 +142,6 @@ function onScroll() {
     }
 }
 
-// Etapas según el porcentaje del video
 function updateStageLabel(fraction) {
     if (!hudStage) return;
     if (fraction < 0.20) {
@@ -122,7 +159,7 @@ function updateStageLabel(fraction) {
     }
 }
 
-// 4. CONTROL CON FLECHAS DEL TECLADO PARA LA PRESENTACIÓN
+// 4. NAVEGACIÓN CON FLECHAS DEL TECLADO PARA EXPONER
 window.addEventListener('keydown', (e) => {
     const sections = document.querySelectorAll('.story-section');
     const scrollPos = window.scrollY;
@@ -148,7 +185,7 @@ window.addEventListener('keydown', (e) => {
     }
 });
 
-// 5. AJUSTE RESPONSIVE DEL CANVAS
+// 5. RESPONSIVE
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -158,8 +195,8 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 window.addEventListener('scroll', onScroll, { passive: true });
 
-// Inicialización
-preloadFrames();
+// Arrancar inmediatamente
+initInstantLoading();
 window.addEventListener('DOMContentLoaded', () => {
     resizeCanvas();
     if (typeof lucide !== 'undefined') lucide.createIcons();
