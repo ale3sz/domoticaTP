@@ -1,0 +1,8 @@
+# Archivos temporales y de entorno
+.agents/
+*.zip
+*.docx
+extract_frames.py
+video sala/
+.DS_Store
+Thumbs.db

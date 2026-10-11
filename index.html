@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domótica — Presentación Interactiva (Flujo de Datos en el Hogar)</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Estilos de Scrollytelling -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="selection:bg-[#D8FF8F] selection:text-black">
+
+    <!-- PANTALLA DE CARGA DE LOS 100 FOTOGRAMAS -->
+    <div id="loader-overlay">
+        <div class="flex items-center gap-3 mb-6">
+            <span class="w-3.5 h-3.5 rounded-sm bg-[#D8FF8F] shadow-[0_0_12px_#D8FF8F] animate-pulse"></span>
+            <span class="font-mono text-sm tracking-widest text-white uppercase font-bold">
+                DOMÓTICA // TECNOLOGÍA DE LA INFORMACIÓN
+            </span>
+        </div>
+        <div class="w-64 h-1.5 bg-white/10 rounded-full overflow-hidden mb-3">
+            <div id="loader-bar" class="h-full bg-[#D8FF8F] w-0 transition-all duration-150"></div>
+        </div>
+        <span id="loader-text" class="font-mono text-xs text-slate-400">
+            Cargando fotogramas de la sala... 0%
+        </span>
+    </div>
+
+    <!-- CANVAS FIJADO DE FONDO (REPRODUCE EL VIDEO DE LA SALA CON EL SCROLL) -->
+    <canvas id="scrolly-canvas"></canvas>
+    
+    <!-- GRADIENTE OVERLAY PARA MÁXIMA LEGIBILIDAD DEL TEXTO -->
+    <div class="video-overlay"></div>
+
+    <!-- BARRA SUPERIOR FIJA (HEADER MINIMALISTA) -->
+    <header class="fixed top-0 inset-x-0 z-40 backdrop-blur-md bg-black/40 border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between font-mono text-xs">
+            
+            <div class="flex items-center gap-3">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#D8FF8F] shadow-[0_0_8px_#D8FF8F]"></span>
+                <span class="text-white font-bold tracking-wider">DOMÓTICA // TP FINAL</span>
+                <span class="hidden md:inline-block px-2 py-0.5 rounded text-[10px] border border-white/15 bg-white/5 text-slate-300">
+                    ESC. N° 49 "J. J. DE URQUIZA"
+                </span>
+            </div>
+
+            <div class="hidden sm:flex items-center gap-4 text-slate-400">
+                <span class="flex items-center gap-1.5 text-[#D8FF8F]">
+                    <i data-lucide="keyboard" class="w-3.5 h-3.5"></i>
+                    <span>Usa las flechas [↓] y [↑] para exponer</span>
+                </span>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <span class="text-[11px] text-slate-400">DESARROLLO DE SOFTWARE</span>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- BARRA INFERIOR FIJA: HUD DE PROGRESO DE LA PRESENTACIÓN -->
+    <div class="fixed bottom-0 inset-x-0 z-40 backdrop-blur-md bg-black/60 border-t border-white/10 py-2.5 px-4 sm:px-6">
+        <div class="max-w-7xl mx-auto flex items-center justify-between font-mono text-xs">
+            
+            <div class="flex items-center gap-3">
+                <span class="text-slate-500 uppercase tracking-wider text-[10px]">TEMA ACTUAL:</span>
+                <span id="hud-stage-name" class="text-[#D8FF8F] font-bold text-xs truncate max-w-xs sm:max-w-md">
+                    01 // ¿QUÉ ES LA DOMÓTICA? (DÍA)
+                </span>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="hidden sm:flex items-center gap-2 w-32 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div id="hud-progress-bar" class="h-full bg-[#D8FF8F] w-0 transition-all duration-75"></div>
+                </div>
+                <span id="hud-percent" class="text-white font-bold">0%</span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- CONTENIDO NARRATIVO FLOTANTE (SECCIONES DEL SCROLL) -->
+    <main class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 py-20 space-y-48">
+
+        <!-- ETAPA 01: INTRODUCCIÓN / DEFINICIÓN (SALA DE DÍA) -->
+        <section class="story-section min-h-[85vh] flex items-center justify-start">
+            <div class="glass-card max-w-xl p-8 sm:p-10 space-y-5">
+                
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#D8FF8F]/30 bg-[#D8FF8F]/10 font-mono text-xs text-[#D8FF8F]">
+                    <span class="w-2 h-2 rounded-full bg-[#D8FF8F] animate-ping"></span>
+                    INTRODUCCIÓN GENERAL
+                </div>
+
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                    ¿Qué es la Domótica? <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#D8FF8F] to-emerald-400">
+                        La vivienda que aprende de vos.
+                    </span>
+                </h1>
+
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Es el conjunto de tecnologías aplicadas al <strong class="text-white">control y la automatización inteligente</strong> de una vivienda. Para nosotros como desarrolladores, una casa inteligente es una red de dispositivos de hardware conectados y coordinados mediante software.
+                </p>
+
+                <!-- Ejemplo visual destacado -->
+                <div class="example-box p-4 font-sans text-xs sm:text-sm text-slate-300 space-y-1">
+                    <span class="font-mono text-[10px] text-[#D8FF8F] uppercase font-bold tracking-wider block">
+                        💡 EJEMPLO COTIDIANO:
+                    </span>
+                    <p>
+                        Ya no es ciencia ficción: hablarle a un asistente de voz para apagar la televisión o que el aire acondicionado se active automáticamente cuando estás regresando a tu hogar.
+                    </p>
+                </div>
+
+                <div class="pt-2 font-mono text-xs text-slate-400 flex items-center gap-2">
+                    <i data-lucide="arrow-down" class="w-4 h-4 text-[#D8FF8F] animate-bounce"></i>
+                    <span>Hacé scroll hacia abajo para ver la transición del día a la noche ↓</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ETAPA 02: ENTRADA / SENSORES (ATARDECER TEMPRANO) -->
+        <section class="story-section min-h-[85vh] flex items-center justify-start">
+            <div class="glass-card max-w-xl p-8 sm:p-10 space-y-5">
+                
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-sky-400/30 bg-sky-400/10 font-mono text-xs text-sky-400">
+                    <i data-lucide="activity" class="w-3.5 h-3.5"></i>
+                    01 // ENTRADA DE INFORMACIÓN
+                </div>
+
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    ¿Qué datos se generan en una casa?
+                </h2>
+
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Una casa inteligente produce información constante a través de dos actores principales:
+                </p>
+
+                <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
+                    <li class="flex items-start gap-2">
+                        <span class="text-[#D8FF8F] font-bold mt-0.5">●</span>
+                        <span><strong class="text-white">Sensores:</strong> Dispositivos físicos (cámaras, sensores de luz ambiental LDR, termostatos y movimiento PIR) que captan el mundo físico y lo traducen a datos digitales.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-sky-400 font-bold mt-0.5">●</span>
+                        <span><strong class="text-white">Usuarios:</strong> Las personas al interactuar con el sistema mediante rutinas móviles o comandos de voz (Alexa / Google Assistant).</span>
+                    </li>
+                </ul>
+
+                <!-- Ejemplo visual destacado -->
+                <div class="example-box p-4 font-sans text-xs sm:text-sm text-slate-300 space-y-1">
+                    <span class="font-mono text-[10px] text-sky-400 uppercase font-bold tracking-wider block">
+                        💡 EJEMPLO COTIDIANO:
+                    </span>
+                    <p>
+                        Al caer la tarde, el sensor de luminosidad detecta la baja de luz solar exterior y el sensor de presencia detecta que la familia acaba de sentarse en el sillón de la sala.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ETAPA 03: TRANSMISIÓN / PROTOCOLOS (ATARDECER PLENO) -->
+        <section class="story-section min-h-[85vh] flex items-center justify-start">
+            <div class="glass-card max-w-xl p-8 sm:p-10 space-y-5">
+                
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-400/30 bg-emerald-400/10 font-mono text-xs text-emerald-400">
+                    <i data-lucide="radio" class="w-3.5 h-3.5"></i>
+                    02 // CANALES DE COMUNICACIÓN
+                </div>
+
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    ¿Cómo viajan los datos? <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-[#D8FF8F]">
+                        Wi-Fi vs Zigbee en Malla
+                    </span>
+                </h2>
+
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    La transmisión se realiza casi en su totalidad por radiofrecuencia inalámbrica hacia un <strong class="text-white">Hub central</strong> o concentrador.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs pt-1">
+                    <div class="p-3 bg-white/[0.03] border border-white/10 rounded-lg">
+                        <span class="text-slate-400 font-bold block mb-1">RED WI-FI (ESTRELLA)</span>
+                        <span class="text-slate-300 font-sans text-xs">Todos los dispositivos van directo al router. Tiende a saturar la banda y consume más energía.</span>
+                    </div>
+                    <div class="p-3 bg-white/[0.03] border border-[#D8FF8F]/30 rounded-lg">
+                        <span class="text-[#D8FF8F] font-bold block mb-1">RED ZIGBEE / Z-WAVE (MALLA)</span>
+                        <span class="text-slate-300 font-sans text-xs">Cada nodo a 220V actúa como repetidor. Consumo ultra-bajo y cobertura que nunca se corta.</span>
+                    </div>
+                </div>
+
+                <!-- Ejemplo visual destacado -->
+                <div class="example-box p-4 font-sans text-xs sm:text-sm text-slate-300 space-y-1">
+                    <span class="font-mono text-[10px] text-[#D8FF8F] uppercase font-bold tracking-wider block">
+                        💡 EJEMPLO COTIDIANO:
+                    </span>
+                    <p>
+                        Si el router de la casa está en la otra punta, el sensor de la ventana no pierde señal: le envía el paquete de datos a la lámpara inteligente del techo, y esta se lo retransmite al Hub al instante.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ETAPA 04: PROCESAMIENTO / EDGE VS CLOUD (ANOCHECER - LUCES ENCENDIDAS) -->
+        <section class="story-section min-h-[85vh] flex items-center justify-start">
+            <div class="glass-card max-w-xl p-8 sm:p-10 space-y-5">
+                
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-400/30 bg-amber-400/10 font-mono text-xs text-amber-400">
+                    <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+                    03 // GESTIÓN & ALMACENAMIENTO
+                </div>
+
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    ¿Dónde se procesa la orden? <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-[#D8FF8F]">
+                        Hub Local (Edge) vs Nube (Cloud)
+                    </span>
+                </h2>
+
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Un punto neurálgico en la materia: ¿quién administra la información y dónde se guarda?
+                </p>
+
+                <ul class="space-y-2 text-xs sm:text-sm text-slate-300">
+                    <li class="flex items-start gap-2">
+                        <span class="text-[#D8FF8F] font-bold mt-0.5">●</span>
+                        <span><strong class="text-white">Procesamiento Local (Edge):</strong> El cerebro de la casa procesa las reglas en milisegundos sin depender de servidores externos ni de conexión a internet.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-amber-400 font-bold mt-0.5">●</span>
+                        <span><strong class="text-white">Servidores en la Nube (Big Data):</strong> Empresas como Amazon, Google o Apple guardan el historial en centros de datos masivos para permitir acceso remoto desde cualquier parte del mundo.</span>
+                    </li>
+                </ul>
+
+                <!-- Ejemplo visual destacado -->
+                <div class="example-box p-4 font-sans text-xs sm:text-sm text-slate-300 space-y-1">
+                    <span class="font-mono text-[10px] text-amber-400 uppercase font-bold tracking-wider block">
+                        💡 EJEMPLO COTIDIANO:
+                    </span>
+                    <p>
+                        Si se corta el cable de fibra óptica de la calle, una casa bien diseñada sigue funcionando: el Hub local enciende la luz suave detrás de la televisión y mantiene la alarma armada sin pestañear.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ETAPA 05: PRIVACIDAD & CIBERSEGURIDAD (NOCHE PROFUNDA) -->
+        <section class="story-section min-h-[85vh] flex items-center justify-start">
+            <div class="glass-card max-w-xl p-8 sm:p-10 space-y-5">
+                
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-rose-400/30 bg-rose-400/10 font-mono text-xs text-rose-400">
+                    <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
+                    04 // CIBERSEGURIDAD & PRIVACIDAD
+                </div>
+
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    Riesgos en el hogar inteligente
+                </h2>
+
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Al digitalizar la vivienda surgen dos desafíos críticos de seguridad que como desarrolladores debemos prevenir:
+                </p>
+
+                <div class="space-y-3 font-sans text-xs sm:text-sm text-slate-300">
+                    <div class="p-3 bg-white/[0.03] border-l-2 border-rose-400 rounded-r-lg">
+                        <strong class="text-white block font-mono text-xs mb-1">1. VULNERABILIDAD ANTE HACKEOS</strong>
+                        Si la red o los aparatos tienen contraseñas débiles por defecto, un atacante puede interceptar cámaras de seguridad, abrir cerraduras o usar los artefactos en ataques masivos (botnets).
+                    </div>
+                    <div class="p-3 bg-white/[0.03] border-l-2 border-amber-400 rounded-r-lg">
+                        <strong class="text-white block font-mono text-xs mb-1">2. PERFILAMIENTO Y PÉRDIDA DE PRIVACIDAD</strong>
+                        Al registrar a qué hora nos levantamos, qué consumimos o cuándo salimos de casa, las empresas construyen perfiles detallados de nuestra vida íntima.
+                    </div>
+                </div>
+
+                <!-- Ejemplo visual destacado -->
+                <div class="example-box p-4 font-sans text-xs sm:text-sm text-slate-300 space-y-1">
+                    <span class="font-mono text-[10px] text-rose-400 uppercase font-bold tracking-wider block">
+                        💡 EJEMPLO COTIDIANO:
+                    </span>
+                    <p>
+                        Comprar una cámara IP económica y no cambiarle la clave de fábrica "admin / 1234" puede dejar la transmisión en vivo de tu living expuesta en internet a cualquier persona.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ETAPA 06: CONCLUSIÓN & CRÉDITOS ACADÉMICOS -->
+        <section class="story-section min-h-[85vh] flex items-center justify-start">
+            <div class="glass-card max-w-xl p-8 sm:p-10 space-y-5">
+                
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#D8FF8F]/30 bg-[#D8FF8F]/10 font-mono text-xs text-[#D8FF8F]">
+                    <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                    05 // REFLEXIÓN FINAL & CONCLUSIÓN
+                </div>
+
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    El verdadero rol del software
+                </h2>
+
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    La domótica no es simplemente comprar artefactos tecnológicos; representa un avance en <strong class="text-white">accesibilidad, confort y eficiencia energética</strong>.
+                </p>
+
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Como futuros profesionales del software, nuestra responsabilidad consiste en diseñar arquitecturas que prioricen el <strong class="text-[#D8FF8F]">cifrado de datos</strong>, la autonomía local y la soberanía sobre la privacidad de las personas en su propio hogar.
+                </p>
+
+                <!-- Ficha Académica Oficial -->
+                <div class="pt-4 border-t border-white/10 font-mono text-xs space-y-3">
+                    <div class="grid grid-cols-2 gap-2 text-slate-300">
+                        <div>
+                            <span class="text-slate-500 block text-[10px]">INSTITUCIÓN</span>
+                            <span class="text-white font-bold">Escuela N° 49 "J. J. de Urquiza"</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-500 block text-[10px]">DOCENTE</span>
+                            <span class="text-white font-bold">Prof. Claudia Gómez</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <span class="text-slate-500 block text-[10px] mb-1">ALUMNOS RESPONSABLES</span>
+                        <div class="flex flex-wrap gap-2 text-[#D8FF8F]">
+                            <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10">Alejandro Saenz</span>
+                            <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10">Fabricio Grottasanta</span>
+                            <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10">Gianni Yppolity</span>
+                            <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10">Donato Balbi</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MOTOR DE SCROLLYTELLING -->
+    <script src="js/scrollytelling.js"></script>
+</body>
+</html>

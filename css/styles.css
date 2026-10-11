@@ -1,0 +1,78 @@
+:root {
+    --lime-accent: #D8FF8F;
+    --sky-accent: #38BDF8;
+    --amber-accent: #F59E0B;
+    --emerald-accent: #10B981;
+}
+
+body {
+    background-color: #07080A;
+    color: #F8FAFC;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    overflow-x: hidden;
+}
+
+.font-mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Glassmorphism para las tarjetas sobre el video */
+.glass-card {
+    background: rgba(10, 12, 16, 0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
+    border-radius: 20px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: rgba(216, 255, 143, 0.35);
+}
+
+/* Badge estilizado para los ejemplos */
+.example-box {
+    background: rgba(255, 255, 255, 0.04);
+    border-left: 3px solid var(--lime-accent);
+    border-radius: 0 10px 10px 0;
+}
+
+/* Canvas del Scrollytelling fijado */
+#scrolly-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -10;
+    pointer-events: none;
+}
+
+/* Overlay para garantizar legibilidad del texto en cualquier frame */
+.video-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 60% 40%, rgba(7, 8, 10, 0.45) 0%, rgba(7, 8, 10, 0.88) 100%);
+    z-index: -5;
+    pointer-events: none;
+}
+
+/* Scrollbar Minimalista */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #07080A; }
+::-webkit-scrollbar-thumb { background: #232733; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--lime-accent); }
+
+/* Pantalla de Carga de Fotogramas */
+#loader-overlay {
+    position: fixed;
+    inset: 0;
+    background: #07080A;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
