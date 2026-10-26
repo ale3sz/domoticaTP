@@ -144,23 +144,86 @@ function onScroll() {
 
 function updateStageLabel(fraction) {
     if (!hudStage) return;
-    if (fraction < 0.20) {
-        hudStage.innerText = "01 // ¿QUÉ ES LA DOMÓTICA? (DÍA)";
-    } else if (fraction < 0.40) {
-        hudStage.innerText = "02 // ENTRADA: SENSORES DE LUZ & PRESENCIA";
-    } else if (fraction < 0.60) {
-        hudStage.innerText = "03 // TRANSMISIÓN: WI-FI VS ZIGBEE MALLA";
-    } else if (fraction < 0.80) {
-        hudStage.innerText = "04 // PROCESAMIENTO: HUB EDGE VS NUBE";
-    } else if (fraction < 0.95) {
-        hudStage.innerText = "05 // CIBERSEGURIDAD & PRIVACIDAD (NOCHE)";
+    if (fraction < 0.18) {
+        hudStage.innerText = "PARTE 1 / 4 // INTRODUCCIÓN Y ARQUITECTURA (DÍA)";
+    } else if (fraction < 0.38) {
+        hudStage.innerText = "PARTE 2 / 4 // ENTRADA DE DATOS & SENSORES (ATARDECER)";
+    } else if (fraction < 0.58) {
+        hudStage.innerText = "PARTE 2 / 4 // TRANSMISIÓN: WI-FI VS ZIGBEE (ATARDECER)";
+    } else if (fraction < 0.78) {
+        hudStage.innerText = "PARTE 3 / 4 // GESTIÓN EN NUBE & FLUJO (ANOCHECER)";
+    } else if (fraction < 0.92) {
+        hudStage.innerText = "PARTE 3 / 4 // CIBERSEGURIDAD & PRIVACIDAD (NOCHE)";
     } else {
-        hudStage.innerText = "06 // CONCLUSIÓN: EL ROL DEL SOFTWARE";
+        hudStage.innerText = "PARTE 4 / 4 // SISTEMAS DE INFORMACIÓN & CIERRE (NOCHE)";
     }
 }
 
-// 4. NAVEGACIÓN CON FLECHAS DEL TECLADO PARA EXPONER
+// 4. FUNCIONES DE APOYO A LA EXPOSICIÓN ORAL
+function scrollToSection(sectionId) {
+    const el = document.getElementById(sectionId);
+    if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+function toggleSpeakerNotes() {
+    const notes = document.querySelectorAll('.speaker-notes');
+    const btn = document.getElementById('toggle-notes-btn');
+    let isHidden = false;
+    notes.forEach(n => {
+        n.classList.toggle('hidden-notes');
+        isHidden = n.classList.contains('hidden-notes');
+    });
+    if (btn) {
+        if (isHidden) {
+            btn.classList.remove('bg-emerald-400/15', 'text-emerald-300', 'border-emerald-400/40');
+            btn.classList.add('bg-white/5', 'text-slate-400', 'border-white/10');
+        } else {
+            btn.classList.add('bg-emerald-400/15', 'text-emerald-300', 'border-emerald-400/40');
+            btn.classList.remove('bg-white/5', 'text-slate-400', 'border-white/10');
+        }
+    }
+}
+
+function openImageModal(src, caption) {
+    const modal = document.getElementById('image-modal');
+    const img = document.getElementById('modal-img-element');
+    const cap = document.getElementById('modal-caption-element');
+    if (modal && img) {
+        img.src = src;
+        if (cap) cap.innerText = caption || '';
+        modal.classList.add('active');
+    }
+}
+
+function closeImageModal() {
+    const modal = document.getElementById('image-modal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
+
+// 5. NAVEGACIÓN Y ATAJOS DE TECLADO PARA EXPONER
 window.addEventListener('keydown', (e) => {
+    // Escape para cerrar modal
+    if (e.key === 'Escape') {
+        closeImageModal();
+        return;
+    }
+
+    // Tecla 'G' para alternar notas de orador
+    if (e.key === 'g' || e.key === 'G') {
+        toggleSpeakerNotes();
+        return;
+    }
+
+    // Teclas 1, 2, 3, 4 para saltar directo a cada parte
+    if (e.key === '1') { scrollToSection('seccion-1'); return; }
+    if (e.key === '2') { scrollToSection('seccion-2'); return; }
+    if (e.key === '3') { scrollToSection('seccion-4'); return; }
+    if (e.key === '4') { scrollToSection('seccion-6'); return; }
+
     const sections = document.querySelectorAll('.story-section');
     const scrollPos = window.scrollY;
 
