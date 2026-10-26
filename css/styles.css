@@ -31,45 +31,11 @@ body {
     border-color: rgba(216, 255, 143, 0.35);
 }
 
-/* Speaker Notes (Modo Expositor) */
-.speaker-notes {
-    background: rgba(16, 185, 129, 0.07);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    border-left: 3px solid #10b981;
-    border-radius: 10px;
-    padding: 14px;
-    margin-top: 12px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.speaker-notes.hidden-notes {
-    display: none !important;
-}
-
-/* Modal de imagen para soporte visual */
-.img-zoom-btn {
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.img-zoom-btn:hover {
-    transform: scale(1.02);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
-}
-
-#image-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 150;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(10px);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-#image-modal.active {
-    display: flex;
+/* Badge estilizado para los ejemplos */
+.example-box {
+    background: rgba(255, 255, 255, 0.04);
+    border-left: 3px solid var(--lime-accent);
+    border-radius: 0 10px 10px 0;
 }
 
 /* Canvas del Scrollytelling fijado */

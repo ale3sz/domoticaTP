@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Domótica — Presentación Interactiva (Flujo de Datos en el Hogar)</title>
+    <title>Domótica — Flujo de Información en el Hogar Inteligente</title>
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -33,7 +33,7 @@
             <div id="loader-bar" class="h-full bg-[#D8FF8F] w-0 transition-all duration-150"></div>
         </div>
         <span id="loader-text" class="font-mono text-xs text-slate-400">
-            Cargando fotogramas de la sala... 0%
+            Inicializando entorno interactivo...
         </span>
     </div>
 
@@ -43,68 +43,42 @@
     <!-- GRADIENTE OVERLAY PARA MÁXIMA LEGIBILIDAD DEL TEXTO -->
     <div class="video-overlay"></div>
 
-    <!-- MODAL PARA VER ESQUEMAS EN ALTA RESOLUCIÓN -->
-    <div id="image-modal" onclick="closeImageModal()">
-        <div class="relative max-w-4xl max-h-[90vh] p-4 bg-slate-900/90 border border-white/20 rounded-2xl shadow-2xl backdrop-blur-xl" onclick="event.stopPropagation()">
-            <button onclick="closeImageModal()" class="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-rose-500 text-white font-bold flex items-center justify-center shadow-lg hover:bg-rose-600">✕</button>
-            <img id="modal-img-element" src="" alt="Esquema" class="max-h-[75vh] w-auto mx-auto rounded-lg object-contain">
-            <p id="modal-caption-element" class="mt-3 text-center text-xs font-mono text-slate-300"></p>
-        </div>
-    </div>
-
-    <!-- BARRA SUPERIOR FIJA (HEADER MINIMALISTA CON ACCESOS RÁPIDOS) -->
-    <header class="fixed top-0 inset-x-0 z-40 backdrop-blur-md bg-black/50 border-b border-white/10">
+    <!-- BARRA SUPERIOR INSTITUCIONAL (ELEGANTE Y DISCRETA) -->
+    <header class="fixed top-0 inset-x-0 z-40 backdrop-blur-md bg-black/40 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between font-mono text-xs">
             
             <div class="flex items-center gap-3">
                 <img src="img/logo_urquiza.png" alt="Urquiza" class="w-7 h-7 object-contain">
-                <span class="text-white font-bold tracking-wider hidden sm:inline">DOMÓTICA // TP FINAL</span>
+                <span class="text-white font-bold tracking-wider hidden sm:inline">DOMÓTICA // TECNOLOGÍA DE LA INFORMACIÓN</span>
                 <span class="px-2 py-0.5 rounded text-[10px] border border-white/15 bg-white/5 text-slate-300">
                     ESC. N° 49 "URQUIZA"
                 </span>
             </div>
 
-            <!-- Accesos rápidos a cada una de las 4 Partes -->
-            <div class="flex items-center gap-1 sm:gap-2">
-                <button onclick="scrollToSection('seccion-1')" class="px-2 py-1 rounded bg-white/5 hover:bg-[#D8FF8F]/20 hover:text-[#D8FF8F] text-slate-300 border border-white/10 text-[11px] transition-colors">
-                    1. Intro
-                </button>
-                <button onclick="scrollToSection('seccion-2')" class="px-2 py-1 rounded bg-white/5 hover:bg-sky-400/20 hover:text-sky-300 text-slate-300 border border-white/10 text-[11px] transition-colors">
-                    2. Datos & Redes
-                </button>
-                <button onclick="scrollToSection('seccion-4')" class="px-2 py-1 rounded bg-white/5 hover:bg-amber-400/20 hover:text-amber-300 text-slate-300 border border-white/10 text-[11px] transition-colors">
-                    3. Nube & Ciber
-                </button>
-                <button onclick="scrollToSection('seccion-6')" class="px-2 py-1 rounded bg-white/5 hover:bg-emerald-400/20 hover:text-emerald-300 text-slate-300 border border-white/10 text-[11px] transition-colors">
-                    4. Sistemas & Cierre
-                </button>
-            </div>
-
-            <!-- Botón de Modo Expositor (Guión en pantalla) -->
-            <div class="flex items-center gap-2">
-                <button id="toggle-notes-btn" onclick="toggleSpeakerNotes()" class="flex items-center gap-1 px-2.5 py-1 rounded-full border border-emerald-400/40 bg-emerald-400/15 text-emerald-300 hover:bg-emerald-400/25 transition-all text-[11px]">
-                    <i data-lucide="mic" class="w-3.5 h-3.5"></i>
-                    <span class="hidden md:inline">Guión [G]</span>
-                </button>
+            <div class="flex items-center gap-4 text-slate-400">
+                <span class="text-[11px] text-slate-300 hidden md:inline">DESARROLLO DE SOFTWARE &bull; 1° 2° TN</span>
+                <span class="flex items-center gap-1.5 text-[#D8FF8F] text-[11px]">
+                    <i data-lucide="keyboard" class="w-3.5 h-3.5"></i>
+                    <span>[↓] [↑]</span>
+                </span>
             </div>
 
         </div>
     </header>
 
-    <!-- BARRA INFERIOR FIJA: HUD DE PROGRESO DE LA PRESENTACIÓN -->
+    <!-- BARRA INFERIOR DISCRETA: INDICADOR DE PROGRESO -->
     <div class="fixed bottom-0 inset-x-0 z-40 backdrop-blur-md bg-black/60 border-t border-white/10 py-2.5 px-4 sm:px-6">
         <div class="max-w-7xl mx-auto flex items-center justify-between font-mono text-xs">
             
             <div class="flex items-center gap-3">
-                <span class="text-slate-500 uppercase tracking-wider text-[10px]">TEMA ACTUAL:</span>
+                <span class="text-slate-500 uppercase tracking-wider text-[10px]">EJE:</span>
                 <span id="hud-stage-name" class="text-[#D8FF8F] font-bold text-xs truncate max-w-xs sm:max-w-md">
-                    PARTE 1 / 4 // INTRODUCCIÓN Y CONCEPTO (DÍA)
+                    01 // INTRODUCCIÓN Y ARQUITECTURA GENERAL
                 </span>
             </div>
 
             <div class="flex items-center gap-4">
-                <span class="hidden sm:inline text-slate-400 text-[10px]">Navegá con [↓] [↑] o [1][2][3][4]</span>
-                <div class="hidden sm:flex items-center gap-2 w-28 h-1.5 bg-white/10 rounded-full overflow-hidden">
+                <div class="hidden sm:flex items-center gap-2 w-32 h-1.5 bg-white/10 rounded-full overflow-hidden">
                     <div id="hud-progress-bar" class="h-full bg-[#D8FF8F] w-0 transition-all duration-75"></div>
                 </div>
                 <span id="hud-percent" class="text-white font-bold">0%</span>
@@ -113,154 +87,146 @@
         </div>
     </div>
 
-    <!-- CONTENIDO NARRATIVO FLOTANTE (SECCIONES DEL SCROLL) -->
+    <!-- CONTENIDO NARRATIVO FLOTANTE (4 PARTES ACOPLADAS Y DISIMULADAS) -->
     <main class="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 py-20 space-y-48">
 
-        <!-- ========================================== -->
-        <!-- PARTE 1 / 4: INTRODUCCIÓN Y CONCEPTO (DÍA) -->
-        <!-- ========================================== -->
-        <section id="seccion-1" class="story-section min-h-[85vh] flex items-center justify-start">
+        <!-- ========================================================= -->
+        <!-- PARTE 1: INTRODUCCIÓN Y EL SOFTWARE COMO MOTOR DEL HOGAR  -->
+        <!-- ========================================================= -->
+        <section id="parte-1" class="story-section min-h-[85vh] flex items-center justify-start">
             <div class="glass-card max-w-xl p-8 sm:p-10 space-y-5">
                 
-                <div class="flex items-center justify-between">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#D8FF8F]/30 bg-[#D8FF8F]/10 font-mono text-xs text-[#D8FF8F]">
-                        <span class="w-2 h-2 rounded-full bg-[#D8FF8F] animate-ping"></span>
-                        PARTE 1 / 4 &bull; INTRODUCCIÓN GENERAL
-                    </div>
-                    <span class="font-mono text-[11px] text-slate-400">⏱️ ~2 min</span>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#D8FF8F]/30 bg-[#D8FF8F]/10 font-mono text-xs text-[#D8FF8F]">
+                    <span class="w-2 h-2 rounded-full bg-[#D8FF8F] animate-ping"></span>
+                    ARQUITECTURA DEL HOGAR INTELIGENTE
                 </div>
 
                 <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
                     ¿Qué es la Domótica? <br>
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#D8FF8F] to-emerald-400">
-                        La vivienda que aprende de vos.
+                        La vivienda que aprende y responde.
                     </span>
                 </h1>
 
                 <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-                    Es el conjunto de tecnologías aplicadas al <strong class="text-white">control y la automatización inteligente</strong> de una vivienda. Para nosotros como desarrolladores, una casa inteligente no son solo aparatos: es una <strong>red de nodos de hardware interconectados e impulsados por software</strong>.
+                    Conjunto de tecnologías aplicadas al <strong class="text-white">control y la automatización inteligente</strong> de una vivienda. Para nosotros como futuros desarrolladores, un hogar inteligente es una <strong>red de nodos de hardware coordinados por software</strong>, donde el verdadero motor es <strong class="text-[#D8FF8F]">el flujo de la información</strong>.
                 </p>
 
-                <!-- Tarjeta con imagen de apoyo -->
-                <div onclick="openImageModal('img/casa_inteligente.png', 'Esquema de la Casa Inteligente: Iluminación, Seguridad, Wi-Fi y Climatización')" 
-                     class="img-zoom-btn flex items-center gap-3 p-2.5 rounded-lg bg-white/[0.04] border border-white/10 hover:border-[#D8FF8F]/40">
-                    <img src="img/casa_inteligente.png" alt="Esquema Casa" class="w-16 h-12 rounded object-cover">
-                    <div class="text-left font-sans">
-                        <span class="text-xs font-bold text-white block">Esquema 1: Ecosistema Residencial</span>
-                        <span class="text-[10px] text-slate-400 font-mono">Hacé clic para ampliar el gráfico explicativo ↗</span>
+                <!-- Pilares Visuales de la Vivienda Inteligente (Apoyo Mental) -->
+                <div class="grid grid-cols-2 gap-2.5 font-mono text-xs pt-1">
+                    <div class="p-3 bg-white/[0.03] border border-white/10 rounded-lg flex items-center gap-2.5">
+                        <span class="w-2 h-2 rounded-full bg-[#D8FF8F]"></span>
+                        <div>
+                            <span class="text-white font-bold block text-[11px]">ILUMINACIÓN & CLIMA</span>
+                            <span class="text-slate-400 font-sans text-[10px]">Automatización adaptativa</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-white/[0.03] border border-white/10 rounded-lg flex items-center gap-2.5">
+                        <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+                        <div>
+                            <span class="text-white font-bold block text-[11px]">SEGURIDAD & ACCESO</span>
+                            <span class="text-slate-400 font-sans text-[10px]">Cámaras y cerraduras</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-white/[0.03] border border-white/10 rounded-lg flex items-center gap-2.5">
+                        <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                        <div>
+                            <span class="text-white font-bold block text-[11px]">CONECTIVIDAD</span>
+                            <span class="text-slate-400 font-sans text-[10px]">Wi-Fi, Zigbee, Hub</span>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-white/[0.03] border border-white/10 rounded-lg flex items-center gap-2.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                        <div>
+                            <span class="text-white font-bold block text-[11px]">INTERACCIÓN</span>
+                            <span class="text-slate-400 font-sans text-[10px]">Voz y aplicaciones móviles</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Ejemplo visual destacado -->
+                <!-- Anclaje Cotidiano -->
                 <div class="example-box p-4 font-sans text-xs sm:text-sm text-slate-300 space-y-1">
                     <span class="font-mono text-[10px] text-[#D8FF8F] uppercase font-bold tracking-wider block">
-                        💡 EJEMPLO COTIDIANO:
+                        💡 DE LA CIENCIA FICCIÓN A LA RUTINA DIARIA:
                     </span>
                     <p>
-                        Ya no es ciencia ficción: hablarle a un asistente de voz para apagar las luces o que el aire acondicionado se active solo cuando el GPS detecta que estamos llegando a casa.
+                        Interactuar verbalmente con el entorno para regular dispositivos o permitir que el sistema climatice los ambientes de forma predictiva según nuestra proximidad física.
                     </p>
-                </div>
-
-                <!-- NOTAS DE ORADOR / GUIÓN (MODO EXPOSITOR) -->
-                <div class="speaker-notes">
-                    <div class="flex items-center gap-2 text-emerald-400 font-mono text-xs font-bold mb-1">
-                        <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
-                        <span>GUIÓN DE APOYO PARA QUIEN EXPONE:</span>
-                    </div>
-                    <p class="text-slate-300 text-xs italic leading-relaxed">
-                        "Buenas noches... Analizamos la domótica como futuros programadores: no como aparatos sueltos, sino como una red de hardware coordinada por software donde el verdadero motor son los datos..."
-                    </p>
-                    <div class="mt-2 pt-2 border-t border-emerald-500/20 text-[11px] text-emerald-300 font-mono">
-                        ➔ Pase al compañero: "Ahora mi compañero explicará qué datos específicos se generan y cómo viajan..."
-                    </div>
                 </div>
 
             </div>
         </section>
 
-        <!-- ======================================================== -->
-        <!-- PARTE 2 / 4: ENTRADA Y FLUJO DE DATOS (ATARDECER INICIAL) -->
-        <!-- ======================================================== -->
-        <section id="seccion-2" class="story-section min-h-[85vh] flex items-center justify-start">
+        <!-- ========================================================= -->
+        <!-- PARTE 2: ENTRADA DE DATOS Y ACTORES (SENSORES VS USUARIOS)-->
+        <!-- ========================================================= -->
+        <section id="parte-2-entrada" class="story-section min-h-[85vh] flex items-center justify-start">
             <div class="glass-card max-w-xl p-8 sm:p-10 space-y-5">
                 
-                <div class="flex items-center justify-between">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-sky-400/30 bg-sky-400/10 font-mono text-xs text-sky-400">
-                        <i data-lucide="activity" class="w-3.5 h-3.5"></i>
-                        PARTE 2 / 4 &bull; ENTRADA DE INFORMACIÓN
-                    </div>
-                    <span class="font-mono text-[11px] text-slate-400">⏱️ ~2.5 min (Paso 1)</span>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-sky-400/30 bg-sky-400/10 font-mono text-xs text-sky-400">
+                    <i data-lucide="activity" class="w-3.5 h-3.5"></i>
+                    ORIGEN & CAPTURA DE INFORMACIÓN
                 </div>
 
                 <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                    ¿Qué datos se generan en una casa?
+                    ¿Qué datos se generan en una vivienda?
                 </h2>
 
                 <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-                    La vivienda inteligente recolecta 3 tipos de datos fundamentales a través de dos actores:
+                    Un hogar conectado produce telemetría continua a través de <strong class="text-white">dos actores generadores</strong>:
                 </p>
 
-                <div class="space-y-2 text-xs sm:text-sm text-slate-300">
-                    <div class="p-2.5 bg-white/[0.03] border-l-2 border-sky-400 rounded-r">
-                        <strong class="text-white block font-mono text-xs">1. DATOS AMBIENTALES</strong>
-                        Temperatura, humedad y luminosidad captados por sensores físicos en tiempo real.
+                <!-- Tarjetas de Apoyo Mental: 3 Tipos de Datos y 2 Actores -->
+                <div class="space-y-2.5 font-sans text-xs sm:text-sm text-slate-300">
+                    <div class="p-3 bg-white/[0.03] border-l-2 border-sky-400 rounded-r-lg">
+                        <div class="flex items-center justify-between font-mono text-xs mb-1">
+                            <strong class="text-white">1. VARIABLES AMBIENTALES</strong>
+                            <span class="text-sky-300 text-[10px]">Temperatura &bull; Humedad &bull; Luz LDR</span>
+                        </div>
+                        <span class="text-slate-300 text-xs">Captura pasiva del entorno analógico convertida a registros binarios.</span>
                     </div>
-                    <div class="p-2.5 bg-white/[0.03] border-l-2 border-[#D8FF8F] rounded-r">
-                        <strong class="text-white block font-mono text-xs">2. HÁBITOS Y COMPORTAMIENTO</strong>
-                        Horarios en que nos levantamos, música reproducida y órdenes de voz por asistentes.
+
+                    <div class="p-3 bg-white/[0.03] border-l-2 border-[#D8FF8F] rounded-r-lg">
+                        <div class="flex items-center justify-between font-mono text-xs mb-1">
+                            <strong class="text-white">2. HÁBITOS & COMPORTAMIENTO</strong>
+                            <span class="text-[#D8FF8F] text-[10px]">Rutinas &bull; Horarios &bull; Comandos de Voz</span>
+                        </div>
+                        <span class="text-slate-300 text-xs">Acciones generadas activamente por los usuarios mediante apps o asistentes (Alexa/Google).</span>
                     </div>
-                    <div class="p-2.5 bg-white/[0.03] border-l-2 border-amber-400 rounded-r">
-                        <strong class="text-white block font-mono text-xs">3. SEGURIDAD Y TELEMETRÍA</strong>
-                        Detección de presencia PIR, apertura de cerraduras, video de cámaras y consumo eléctrico.
+
+                    <div class="p-3 bg-white/[0.03] border-l-2 border-amber-400 rounded-r-lg">
+                        <div class="flex items-center justify-between font-mono text-xs mb-1">
+                            <strong class="text-white">3. SEGURIDAD & CONSUMO</strong>
+                            <span class="text-amber-300 text-[10px]">Presencia PIR &bull; Accesos &bull; Telemetría</span>
+                        </div>
+                        <span class="text-slate-300 text-xs">Apertura de aberturas, transmisión de video y curvas de consumo energético.</span>
                     </div>
                 </div>
 
-                <!-- Tarjeta con imagen de apoyo -->
-                <div onclick="openImageModal('img/nube_datos.png', 'Flujo de Datos: Energía, Seguridad, Ambiente y Hábitos canalizados hacia la Nube')" 
-                     class="img-zoom-btn flex items-center gap-3 p-2.5 rounded-lg bg-white/[0.04] border border-white/10 hover:border-sky-400/40">
-                    <img src="img/nube_datos.png" alt="Esquema Datos" class="w-16 h-12 rounded object-cover">
-                    <div class="text-left font-sans">
-                        <span class="text-xs font-bold text-white block">Esquema 2: Los 4 Caudales de Información</span>
-                        <span class="text-[10px] text-slate-400 font-mono">Hacé clic para ampliar el gráfico ↗</span>
+                <!-- Apoyo Visual Integrado Disimulado -->
+                <div class="p-3 bg-white/[0.02] border border-white/10 rounded-lg flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <img src="img/nube_datos.png" alt="Telemetría" class="w-12 h-10 object-contain rounded opacity-85">
+                        <div class="font-mono text-xs">
+                            <span class="text-white font-bold block">4 Ejes de Telemetría</span>
+                            <span class="text-slate-400 text-[10px]">Energía &bull; Seguridad &bull; Clima &bull; Hábitos</span>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Ejemplo visual destacado -->
-                <div class="example-box p-4 font-sans text-xs sm:text-sm text-slate-300 space-y-1">
-                    <span class="font-mono text-[10px] text-sky-400 uppercase font-bold tracking-wider block">
-                        💡 EJEMPLO COTIDIANO:
-                    </span>
-                    <p>
-                        Al atardecer, el sensor LDR detecta la caída de luz solar exterior y el sensor de presencia registra que la familia acaba de sentarse en el sillón.
-                    </p>
-                </div>
-
-                <!-- NOTAS DE ORADOR / GUIÓN (MODO EXPOSITOR) -->
-                <div class="speaker-notes">
-                    <div class="flex items-center gap-2 text-emerald-400 font-mono text-xs font-bold mb-1">
-                        <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
-                        <span>GUIÓN DE APOYO PARA QUIEN EXPONE:</span>
-                    </div>
-                    <p class="text-slate-300 text-xs italic leading-relaxed">
-                        "En una casa inteligente se produce información constante: ambiental, de hábitos y de seguridad. Los producen dos actores: los sensores físicos (que traducen el mundo físico a datos binarios) y nosotros los usuarios al dar órdenes..."
-                    </p>
+                    <span class="font-mono text-[10px] text-sky-400 border border-sky-400/30 px-2 py-0.5 rounded">TELEMETRÍA IOT</span>
                 </div>
 
             </div>
         </section>
 
-        <!-- ========================================================== -->
-        <!-- PARTE 2 / 4: TRANSMISIÓN Y PROTOCOLOS (ATARDECER PLENO)    -->
-        <!-- ========================================================== -->
-        <section id="seccion-3" class="story-section min-h-[85vh] flex items-center justify-start">
+        <!-- ========================================================= -->
+        <!-- PARTE 2 (PASO 2): REDES LOCALES (WI-FI VS ZIGBEE MALLA)   -->
+        <!-- ========================================================= -->
+        <section id="parte-2-redes" class="story-section min-h-[85vh] flex items-center justify-start">
             <div class="glass-card max-w-xl p-8 sm:p-10 space-y-5">
                 
-                <div class="flex items-center justify-between">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-400/30 bg-emerald-400/10 font-mono text-xs text-emerald-400">
-                        <i data-lucide="radio" class="w-3.5 h-3.5"></i>
-                        PARTE 2 / 4 &bull; CANALES & PROTOCOLOS
-                    </div>
-                    <span class="font-mono text-[11px] text-slate-400">⏱️ ~2.5 min (Paso 2)</span>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-400/30 bg-emerald-400/10 font-mono text-xs text-emerald-400">
+                    <i data-lucide="radio" class="w-3.5 h-3.5"></i>
+                    TRANSMISIÓN & PROTOCOLOS DE RED
                 </div>
 
                 <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -271,122 +237,101 @@
                 </h2>
 
                 <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-                    La comunicación se realiza por radiofrecuencia local hacia un <strong class="text-white">Hub central</strong> (concentrador o gateway):
+                    La transmisión es predominantemente inalámbrica, requiriendo diferenciar la topología de red según el consumo y la confiabilidad:
                 </p>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs pt-1">
-                    <div class="p-3 bg-white/[0.03] border border-white/10 rounded-lg">
-                        <span class="text-slate-400 font-bold block mb-1">RED WI-FI (ESTRELLA)</span>
-                        <span class="text-slate-300 font-sans text-xs">Todos los nodos se conectan directo al router. Satura el espectro de red y consume demasiada batería.</span>
+                <!-- Comparativa Visual Técnica (Gatillo Mental) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-xs">
+                    <div class="p-3.5 bg-white/[0.03] border border-white/10 rounded-lg space-y-1.5">
+                        <span class="text-slate-400 font-bold block flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> WI-FI (ESTRELLA)
+                        </span>
+                        <p class="text-slate-300 font-sans text-xs leading-relaxed">
+                            Conexión directa al router. Alto ancho de banda, pero <strong class="text-rose-400">alto consumo energético</strong> y riesgo de congestión en la tabla de IPs.
+                        </p>
                     </div>
-                    <div class="p-3 bg-white/[0.03] border border-[#D8FF8F]/30 rounded-lg">
-                        <span class="text-[#D8FF8F] font-bold block mb-1">ZIGBEE / Z-WAVE (MALLA)</span>
-                        <span class="text-slate-300 font-sans text-xs">Topología mesh: cada nodo a 220V actúa como repetidor. Consumo mínimo (años con una sola pila botón).</span>
+
+                    <div class="p-3.5 bg-white/[0.03] border border-[#D8FF8F]/30 rounded-lg space-y-1.5">
+                        <span class="text-[#D8FF8F] font-bold block flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-[#D8FF8F]"></span> ZIGBEE / Z-WAVE (MALLA)
+                        </span>
+                        <p class="text-slate-300 font-sans text-xs leading-relaxed">
+                            Topología mesh auto-reparable. <strong class="text-[#D8FF8F]">Ultra bajo consumo</strong> (años con pila botón); cada nodo alimentado repite la señal.
+                        </p>
                     </div>
                 </div>
 
-                <!-- Ejemplo visual destacado -->
-                <div class="example-box p-4 font-sans text-xs sm:text-sm text-slate-300 space-y-1">
-                    <span class="font-mono text-[10px] text-[#D8FF8F] uppercase font-bold tracking-wider block">
-                        💡 EJEMPLO COTIDIANO:
-                    </span>
-                    <p>
-                        Si el sensor de la ventana está lejos del router, no se corta: le envía el paquete a la lámpara inteligente del techo, y esta se lo retransmite al Hub al instante.
-                    </p>
-                </div>
-
-                <!-- NOTAS DE ORADOR / GUIÓN (MODO EXPOSITOR) -->
-                <div class="speaker-notes">
-                    <div class="flex items-center gap-2 text-emerald-400 font-mono text-xs font-bold mb-1">
-                        <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
-                        <span>GUIÓN DE APOYO PARA QUIEN EXPONE:</span>
+                <!-- El rol del Concentrador Central -->
+                <div class="p-3.5 bg-white/[0.04] border-l-2 border-emerald-400 rounded-r-lg font-mono text-xs space-y-1">
+                    <div class="flex items-center justify-between text-emerald-300 font-bold">
+                        <span>EL HUB CENTRAL (GATEWAY / CONCENTRADOR):</span>
+                        <span class="text-[10px] text-slate-400">PUENTE TRADUCTOR</span>
                     </div>
-                    <p class="text-slate-300 text-xs italic leading-relaxed">
-                        "No todo usa Wi-Fi porque se agotaría la batería y colapsaría el router. En domótica se usa Zigbee o Z-Wave en red mallada. Todos los paquetes llegan al Hub central, que es el traductor hacia internet..."
+                    <p class="font-sans text-xs text-slate-300 leading-relaxed">
+                        Traduce los paquetes de radiofrecuencia de bajo consumo hacia protocolos IP estándar, permitiendo la comunicación fluida con el router y el posterior enlace a Internet.
                     </p>
-                    <div class="mt-2 pt-2 border-t border-emerald-500/20 text-[11px] text-emerald-300 font-mono">
-                        ➔ Pase al compañero: "Una vez que los datos salen del Hub hacia internet... ¿dónde se guardan y qué riesgos corremos? Lo explica mi compañero..."
-                    </div>
                 </div>
 
             </div>
         </section>
 
-        <!-- ======================================================== -->
-        <!-- PARTE 3 / 4: GESTIÓN EN NUBE Y FLUJO (ANOCHECER)         -->
-        <!-- ======================================================== -->
-        <section id="seccion-4" class="story-section min-h-[85vh] flex items-center justify-start">
+        <!-- ========================================================= -->
+        <!-- PARTE 3: ADMINISTRACIÓN EN LA NUBE Y EL ESQUEMA DE FLUJO  -->
+        <!-- ========================================================= -->
+        <section id="parte-3-nube" class="story-section min-h-[85vh] flex items-center justify-start">
             <div class="glass-card max-w-xl p-8 sm:p-10 space-y-5">
                 
-                <div class="flex items-center justify-between">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-400/30 bg-amber-400/10 font-mono text-xs text-amber-400">
-                        <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
-                        PARTE 3 / 4 &bull; GESTIÓN & ALMACENAMIENTO
-                    </div>
-                    <span class="font-mono text-[11px] text-slate-400">⏱️ ~2.5 min (Paso 1)</span>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-400/30 bg-amber-400/10 font-mono text-xs text-amber-400">
+                    <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+                    GESTIÓN, ALMACENAMIENTO & TERCEROS
                 </div>
 
                 <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
                     ¿Dónde reside la información? <br>
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-[#D8FF8F]">
-                        Hub Local (Edge) vs Nube (Cloud)
+                        Hub Local (Edge) vs Nube (Big Data)
                     </span>
                 </h2>
 
                 <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-                    La administración macro ocurre en los centros de datos de Amazon, Google, Apple o empresas asiáticas de IoT (Big Data).
+                    La administración inicial opera en el concentrador hogareño, pero a nivel macro la información se centraliza en servidores masivos de empresas proveedoras (Google, Amazon, Apple, plataformas IoT).
                 </p>
 
-                <!-- Esquema de Flujo Técnico del TP -->
-                <div class="p-3 bg-white/[0.04] border border-amber-400/30 rounded-xl space-y-2">
+                <!-- Diagrama de Flujo Técnico Oficial (Gatillo Mental Completo) -->
+                <div class="p-4 bg-white/[0.04] border border-amber-400/30 rounded-xl space-y-2.5">
                     <span class="text-[10px] font-mono uppercase text-amber-400 font-bold tracking-wider block">
-                        🔄 ESQUEMA DEL FLUJO DE INFORMACIÓN:
+                        🔄 ESQUEMA INTEGRAL DEL FLUJO DE INFORMACIÓN:
                     </span>
-                    <div class="flex flex-wrap items-center gap-1.5 font-mono text-[11px] text-slate-300">
-                        <span class="px-2 py-0.5 rounded bg-white/10 text-white">[Entorno / Usuario]</span>
-                        <span>➔</span>
-                        <span class="px-2 py-0.5 rounded bg-white/10 text-sky-300">[Sensores / App]</span>
-                        <span>➔</span>
-                        <span class="px-2 py-0.5 rounded bg-white/10 text-emerald-300">[Hub Central]</span>
-                        <span>➔</span>
-                        <span class="px-2 py-0.5 rounded bg-white/10 text-amber-300">[Nube (Big Data)]</span>
-                        <span>➔</span>
-                        <span class="px-2 py-0.5 rounded bg-white/10 text-[#D8FF8F]">[Actuadores]</span>
+                    <div class="grid grid-cols-5 gap-1.5 text-center font-mono text-[10px]">
+                        <div class="p-2 rounded bg-white/10 text-white font-bold">Entorno / Usuario</div>
+                        <div class="p-2 rounded bg-sky-500/20 text-sky-300 border border-sky-400/30 font-bold">Sensores / App</div>
+                        <div class="p-2 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 font-bold">Hub Central</div>
+                        <div class="p-2 rounded bg-amber-500/20 text-amber-300 border border-amber-400/30 font-bold">Nube (Cloud)</div>
+                        <div class="p-2 rounded bg-[#D8FF8F]/20 text-[#D8FF8F] border border-[#D8FF8F]/30 font-bold">Actuadores</div>
+                    </div>
+                    <div class="text-[10px] text-slate-400 font-mono text-center pt-1">
+                        Captura ➔ Red Local (Zigbee/Wi-Fi) ➔ Gateway ➔ Tránsito Internet (TLS) ➔ Telemando
                     </div>
                 </div>
 
-                <!-- Cesión de datos a terceros -->
-                <div class="p-3 bg-white/[0.03] border-l-2 border-amber-400 rounded-r text-xs text-slate-300">
-                    <strong class="text-white block font-mono text-xs mb-1">¿SE COMPARTEN CON TERCEROS?</strong>
-                    Sí, habitualmente. Al aceptar los términos y condiciones de las apps, autorizamos el uso de nuestros datos para alimentar algoritmos comerciales de <strong>perfilamiento publicitario predictivo</strong>.
-                </div>
-
-                <!-- NOTAS DE ORADOR / GUIÓN (MODO EXPOSITOR) -->
-                <div class="speaker-notes">
-                    <div class="flex items-center gap-2 text-emerald-400 font-mono text-xs font-bold mb-1">
-                        <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
-                        <span>GUIÓN DE APOYO PARA QUIEN EXPONE:</span>
-                    </div>
-                    <p class="text-slate-300 text-xs italic leading-relaxed">
-                        "Casi nada queda guardado dentro de casa. La gestión real ocurre en la nube de gigantes como Google o Amazon. Al aceptar términos de uso, muchas veces cedemos nuestros patrones de vida para crear perfiles publicitarios..."
-                    </p>
+                <!-- La Cesión a Terceros -->
+                <div class="p-3 bg-white/[0.03] border-l-2 border-amber-400 rounded-r-lg text-xs text-slate-300">
+                    <strong class="text-white block font-mono text-xs mb-1">CESIÓN DE DATOS & TÉRMINOS Y CONDICIONES:</strong>
+                    La telemetría doméstica es frecuentemente compartida con asociados comerciales para el desarrollo de <strong>perfiles publicitarios predictivos</strong> y modelos analíticos de hábitos de consumo.
                 </div>
 
             </div>
         </section>
 
-        <!-- ======================================================== -->
-        <!-- PARTE 3 / 4: CIBERSEGURIDAD Y PRIVACIDAD (NOCHE)          -->
-        <!-- ======================================================== -->
-        <section id="seccion-5" class="story-section min-h-[85vh] flex items-center justify-start">
+        <!-- ========================================================= -->
+        <!-- PARTE 3 (PASO 2): CIBERSEGURIDAD, VECTORES & PRIVACIDAD   -->
+        <!-- ========================================================= -->
+        <section id="parte-3-seguridad" class="story-section min-h-[85vh] flex items-center justify-start">
             <div class="glass-card max-w-xl p-8 sm:p-10 space-y-5">
                 
-                <div class="flex items-center justify-between">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-rose-400/30 bg-rose-400/10 font-mono text-xs text-rose-400">
-                        <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
-                        PARTE 3 / 4 &bull; CIBERSEGURIDAD & PRIVACIDAD
-                    </div>
-                    <span class="font-mono text-[11px] text-slate-400">⏱️ ~2.5 min (Paso 2)</span>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-rose-400/30 bg-rose-400/10 font-mono text-xs text-rose-400">
+                    <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
+                    VULNERABILIDADES & SUPERFICIE DE ATAQUE
                 </div>
 
                 <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
@@ -394,99 +339,87 @@
                 </h2>
 
                 <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-                    Digitalizar la vivienda introduce dos riesgos críticos que debemos mitigar desde el diseño de software:
+                    Al digitalizar el entorno íntimo emergen dos frentes de riesgo que demandan rigurosidad técnica:
                 </p>
 
+                <!-- Tarjetas de Impacto Visual: Hackeos vs Pérdida de Privacidad -->
                 <div class="space-y-3 font-sans text-xs sm:text-sm text-slate-300">
-                    <div class="p-3 bg-white/[0.03] border-l-2 border-rose-400 rounded-r-lg">
-                        <strong class="text-white block font-mono text-xs mb-1">1. VULNERABILIDAD ANTE HACKEOS</strong>
-                        Contraseñas por defecto (admin/1234) o firmware desactualizado permiten tomar control de cámaras IP, cerraduras y micrófonos, o incorporar aparatos a botnets maliciosas.
+                    <div class="p-3.5 bg-white/[0.03] border-l-2 border-rose-400 rounded-r-lg space-y-1">
+                        <div class="flex items-center justify-between font-mono text-xs">
+                            <strong class="text-white">1. VULNERABILIDAD ANTE CIBERATAQUES</strong>
+                            <span class="text-rose-400 text-[10px]">HACKEOS & BOTNETS</span>
+                        </div>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            Credenciales por defecto, puertos expuestos o firmware desactualizado permiten tomar control de cámaras de seguridad, vulnerar cerraduras inteligentes o reclutar dispositivos hogareños en redes zombi (botnets).
+                        </p>
                     </div>
-                    <div class="p-3 bg-white/[0.03] border-l-2 border-amber-400 rounded-r-lg">
-                        <strong class="text-white block font-mono text-xs mb-1">2. PÉRDIDA DE PRIVACIDAD Y FILTRACIONES</strong>
-                        Saber cuándo salimos o qué hábitos tenemos crea un perfil íntimo. Una brecha en los servidores de la empresa expone la privacidad completa del hogar.
+
+                    <div class="p-3.5 bg-white/[0.03] border-l-2 border-amber-400 rounded-r-lg space-y-1">
+                        <div class="flex items-center justify-between font-mono text-xs">
+                            <strong class="text-white">2. PERFILAMIENTO & PÉRDIDA DE INTIMIDAD</strong>
+                            <span class="text-amber-300 text-[10px]">DATA BREACHES</span>
+                        </div>
+                        <p class="text-slate-300 text-xs leading-relaxed">
+                            El registro detallado de horarios, presencia y rutinas construye una radiografía de nuestra privacidad. Una filtración en los servidores del fabricante expone la vida íntima del hogar a terceros.
+                        </p>
                     </div>
                 </div>
 
-                <!-- Tarjeta con imagen de apoyo -->
-                <div onclick="openImageModal('img/ciberseguridad.png', 'Ciberseguridad en el Hogar: Privacidad de Datos, Encriptación, Control de Acceso y Red')" 
-                     class="img-zoom-btn flex items-center gap-3 p-2.5 rounded-lg bg-white/[0.04] border border-white/10 hover:border-rose-400/40">
-                    <img src="img/ciberseguridad.png" alt="Ciberseguridad" class="w-16 h-12 rounded object-cover">
-                    <div class="text-left font-sans">
-                        <span class="text-xs font-bold text-white block">Esquema 3: Pilares de Ciberseguridad</span>
-                        <span class="text-[10px] text-slate-400 font-mono">Hacé clic para ampliar el gráfico ↗</span>
+                <!-- Gráfico de Pilares de Protección Integrado -->
+                <div class="p-3 bg-white/[0.02] border border-white/10 rounded-lg flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <img src="img/ciberseguridad.png" alt="Ciberseguridad" class="w-12 h-10 object-contain rounded opacity-85">
+                        <div class="font-mono text-xs">
+                            <span class="text-white font-bold block">Defensa en Profundidad</span>
+                            <span class="text-slate-400 text-[10px]">Encriptación &bull; Control de Acceso &bull; VLANs</span>
+                        </div>
                     </div>
-                </div>
-
-                <!-- NOTAS DE ORADOR / GUIÓN (MODO EXPOSITOR) -->
-                <div class="speaker-notes">
-                    <div class="flex items-center gap-2 text-emerald-400 font-mono text-xs font-bold mb-1">
-                        <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
-                        <span>GUIÓN DE APOYO PARA QUIEN EXPONE:</span>
-                    </div>
-                    <p class="text-slate-300 text-xs italic leading-relaxed">
-                        "Esto abre dos peligros: ciberataques (si dejamos claves fáciles o puertos abiertos, pueden espiar cámaras o abrir puertas) y la pérdida de privacidad ante filtraciones de datos..."
-                    </p>
-                    <div class="mt-2 pt-2 border-t border-emerald-500/20 text-[11px] text-emerald-300 font-mono">
-                        ➔ Pase al compañero: "Para cerrar la exposición, mi compañero relacionará todo con la teoría de sistemas de información..."
-                    </div>
+                    <span class="font-mono text-[10px] text-rose-400 border border-rose-400/30 px-2 py-0.5 rounded">SEGURIDAD CRÍTICA</span>
                 </div>
 
             </div>
         </section>
 
-        <!-- ======================================================== -->
-        <!-- PARTE 4 / 4: SISTEMAS, REFLEXIÓN Y CRÉDITOS (NOCHE PROF.)-->
-        <!-- ======================================================== -->
-        <section id="seccion-6" class="story-section min-h-[85vh] flex items-center justify-start">
+        <!-- ========================================================= -->
+        <!-- PARTE 4: SISTEMAS DE COMUNICACIÓN, ÉTICA Y CONCLUSIÓN     -->
+        <!-- ========================================================= -->
+        <section id="parte-4-cierre" class="story-section min-h-[85vh] flex items-center justify-start">
             <div class="glass-card max-w-xl p-8 sm:p-10 space-y-5">
                 
-                <div class="flex items-center justify-between">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#D8FF8F]/30 bg-[#D8FF8F]/10 font-mono text-xs text-[#D8FF8F]">
-                        <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
-                        PARTE 4 / 4 &bull; SISTEMAS & REFLEXIÓN FINAL
-                    </div>
-                    <span class="font-mono text-[11px] text-slate-400">⏱️ ~2.5 min</span>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#D8FF8F]/30 bg-[#D8FF8F]/10 font-mono text-xs text-[#D8FF8F]">
+                    <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                    SISTEMAS DE INFORMACIÓN & REFLEXIÓN FINAL
                 </div>
 
                 <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                    Relación con la Materia y Conclusión Ética
+                    Relación con la Materia y Rol del Desarrollador
                 </h2>
 
-                <!-- Conexión formal con Sistemas de Información -->
-                <div class="p-3 bg-white/[0.04] border border-[#D8FF8F]/30 rounded-xl space-y-2 text-xs text-slate-300">
+                <!-- Conexión Teórica con Tecnología de la Información -->
+                <div class="p-3.5 bg-white/[0.04] border border-[#D8FF8F]/30 rounded-xl space-y-2 text-xs text-slate-300">
                     <span class="text-[10px] font-mono uppercase text-[#D8FF8F] font-bold tracking-wider block">
-                        📡 RELACIÓN CON SISTEMAS DE COMUNICACIÓN:
+                        📡 EL MODELO DE COMUNICACIÓN COMPLETO:
                     </span>
                     <ul class="space-y-1.5 list-disc pl-4 font-sans text-xs">
-                        <li><strong>Modelo integral:</strong> Entrada (Input) ➔ Canal Inalámbrico ➔ Nodo Central ➔ Big Data / Nube ➔ Telemando (Actuadores).</li>
-                        <li><strong>Flujo bidireccional:</strong> Telemetría constante de subida y telemando de bajada en tiempo real.</li>
-                        <li><strong>Cifrado y Encriptación:</strong> Protocolos criptográficos (TLS/AES) obligatorios en el tránsito de datos.</li>
+                        <li><strong>Input (Entrada):</strong> Captura sensorial y comandos del usuario en el entorno físico.</li>
+                        <li><strong>Canal y Nodo Central:</strong> Transporte inalámbrico local hacia el concentrador.</li>
+                        <li><strong>Big Data en la Nube:</strong> Procesamiento analítico masivo y sincronización remota.</li>
+                        <li><strong>Flujo Bidireccional Constante:</strong> Telemetría de subida y telemando de bajada hacia los actuadores.</li>
+                        <li><strong>Criptografía en Tránsito:</strong> Protocolos seguros (TLS/AES) que garantizan confidencialidad e integridad.</li>
                     </ul>
                 </div>
 
-                <!-- Reflexión Ética de los Alumnos -->
-                <p class="text-slate-300 text-sm leading-relaxed">
-                    La domótica aporta enormes avances en <strong class="text-white">accesibilidad (inclusión para personas con movilidad reducida) y eficiencia energética</strong>. Sin embargo, no podemos ignorar que a menudo pagamos esa comodidad entregando nuestra intimidad.
-                </p>
-
-                <div class="example-box p-3.5 font-sans text-xs sm:text-sm text-slate-200">
-                    <strong class="text-[#D8FF8F] block font-mono text-xs uppercase mb-1">🛡️ MANDATO PARA EL DESARROLLADOR:</strong>
-                    <em>Security & Privacy by Design:</em> La seguridad y la privacidad del usuario no pueden ser un parche tardío; deben ser la base arquitectónica desde la cual se programa cualquier sistema.
-                </div>
-
-                <!-- NOTAS DE ORADOR / GUIÓN (MODO EXPOSITOR) -->
-                <div class="speaker-notes">
-                    <div class="flex items-center gap-2 text-emerald-400 font-mono text-xs font-bold mb-1">
-                        <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
-                        <span>GUIÓN DE APOYO PARA QUIEN EXPONE:</span>
-                    </div>
-                    <p class="text-slate-300 text-xs italic leading-relaxed">
-                        "Conectando con la materia, la domótica es un sistema de comunicación completo y bidireccional. La accesibilidad es el gran beneficio, pero la privacidad es el gran desafío. Como programadores, la seguridad debe ser el cimiento... Muchas gracias por su atención."
+                <!-- El Mandato Ético y Reflexión -->
+                <div class="example-box p-4 font-sans text-xs sm:text-sm text-slate-200 space-y-1.5">
+                    <span class="font-mono text-[10px] text-[#D8FF8F] uppercase font-bold tracking-wider block">
+                        🛡️ SEGURIDAD Y PRIVACIDAD POR DISEÑO:
+                    </span>
+                    <p class="leading-relaxed">
+                        La domótica representa un salto en <strong class="text-white">accesibilidad universal y confort</strong>. Como desarrolladores de software, nuestro compromiso ético es claro: <strong>la privacidad y la seguridad no pueden ser un parche tardío, sino la base estructural desde la cual se diseña cualquier sistema tecnológico</strong>.
                     </p>
                 </div>
 
-                <!-- Ficha Académica Oficial del Grupo -->
+                <!-- Ficha Académica Oficial -->
                 <div class="pt-4 border-t border-white/10 font-mono text-xs space-y-3">
                     <div class="grid grid-cols-2 gap-2 text-slate-300">
                         <div>

@@ -15,9 +15,7 @@ const hudStage = document.getElementById('hud-stage-name');
 const hudPercent = document.getElementById('hud-percent');
 
 // 1. CARGA PROGRESIVA INSTANTÁNEA (APPLE ARCHITECTURE)
-// Cargamos el primer fotograma de inmediato para desbloquear la pantalla en menos de 0.2s.
 function initInstantLoading() {
-    // A) Cargar Frame 1 prioritario
     const firstImg = new Image();
     firstImg.src = `fotogramas_sala/frame_0001.webp`;
     firstImg.onload = () => {
@@ -26,19 +24,16 @@ function initInstantLoading() {
         resizeCanvas();
         renderFrame(0);
 
-        // Desbloquear pantalla INMEDIATAMENTE
         if (loaderOverlay) {
             loaderOverlay.style.opacity = '0';
             setTimeout(() => loaderOverlay.style.display = 'none', 400);
         }
 
-        // B) Iniciar carga prioritaria de hitos (cada 3 frames)
         loadPriorityPass();
     };
 }
 
 function loadPriorityPass() {
-    // Paso 1: Hitos clave para cubrir todo el recorrido de inmediato
     const priorityIndices = [];
     for (let i = 0; i < TOTAL_FRAMES; i += 3) {
         if (i !== 0) priorityIndices.push(i);
@@ -54,7 +49,6 @@ function loadPriorityPass() {
             loadedSet.add(idx);
             pCount++;
             if (pCount >= priorityIndices.length) {
-                // Paso 2: Cargar el resto de frames en segundo plano silencioso
                 loadRemainingFrames();
             }
         };
@@ -79,7 +73,6 @@ function loadRemainingFrames() {
 function renderFrame(targetIndex) {
     let imgToDraw = frames[targetIndex];
 
-    // Si el fotograma exacto aún se está descargando, buscar el más cercano ya disponible
     if (!imgToDraw || !imgToDraw.complete) {
         let bestDistance = Infinity;
         let bestIdx = 0;
@@ -97,7 +90,6 @@ function renderFrame(targetIndex) {
 
     const cWidth = canvas.width;
     const cHeight = canvas.height;
-
     const imgWidth = imgToDraw.naturalWidth || 1600;
     const imgHeight = imgToDraw.naturalHeight || 900;
 
@@ -145,85 +137,22 @@ function onScroll() {
 function updateStageLabel(fraction) {
     if (!hudStage) return;
     if (fraction < 0.18) {
-        hudStage.innerText = "PARTE 1 / 4 // INTRODUCCIÓN Y ARQUITECTURA (DÍA)";
+        hudStage.innerText = "01 // ¿QUÉ ES LA DOMÓTICA? (ARQUITECTURA DEL HOGAR)";
     } else if (fraction < 0.38) {
-        hudStage.innerText = "PARTE 2 / 4 // ENTRADA DE DATOS & SENSORES (ATARDECER)";
+        hudStage.innerText = "02 // ENTRADA DE DATOS (SENSORES VS USUARIOS)";
     } else if (fraction < 0.58) {
-        hudStage.innerText = "PARTE 2 / 4 // TRANSMISIÓN: WI-FI VS ZIGBEE (ATARDECER)";
+        hudStage.innerText = "03 // CANALES DE COMUNICACIÓN (WI-FI VS ZIGBEE MALLA)";
     } else if (fraction < 0.78) {
-        hudStage.innerText = "PARTE 3 / 4 // GESTIÓN EN NUBE & FLUJO (ANOCHECER)";
+        hudStage.innerText = "04 // GESTIÓN & ALMACENAMIENTO (EDGE VS NUBE)";
     } else if (fraction < 0.92) {
-        hudStage.innerText = "PARTE 3 / 4 // CIBERSEGURIDAD & PRIVACIDAD (NOCHE)";
+        hudStage.innerText = "05 // CIBERSEGURIDAD & PRIVACIDAD (SUPERFICIE DE ATAQUE)";
     } else {
-        hudStage.innerText = "PARTE 4 / 4 // SISTEMAS DE INFORMACIÓN & CIERRE (NOCHE)";
+        hudStage.innerText = "06 // SISTEMAS DE INFORMACIÓN & REFLEXIÓN ÉTICA";
     }
 }
 
-// 4. FUNCIONES DE APOYO A LA EXPOSICIÓN ORAL
-function scrollToSection(sectionId) {
-    const el = document.getElementById(sectionId);
-    if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-    }
-}
-
-function toggleSpeakerNotes() {
-    const notes = document.querySelectorAll('.speaker-notes');
-    const btn = document.getElementById('toggle-notes-btn');
-    let isHidden = false;
-    notes.forEach(n => {
-        n.classList.toggle('hidden-notes');
-        isHidden = n.classList.contains('hidden-notes');
-    });
-    if (btn) {
-        if (isHidden) {
-            btn.classList.remove('bg-emerald-400/15', 'text-emerald-300', 'border-emerald-400/40');
-            btn.classList.add('bg-white/5', 'text-slate-400', 'border-white/10');
-        } else {
-            btn.classList.add('bg-emerald-400/15', 'text-emerald-300', 'border-emerald-400/40');
-            btn.classList.remove('bg-white/5', 'text-slate-400', 'border-white/10');
-        }
-    }
-}
-
-function openImageModal(src, caption) {
-    const modal = document.getElementById('image-modal');
-    const img = document.getElementById('modal-img-element');
-    const cap = document.getElementById('modal-caption-element');
-    if (modal && img) {
-        img.src = src;
-        if (cap) cap.innerText = caption || '';
-        modal.classList.add('active');
-    }
-}
-
-function closeImageModal() {
-    const modal = document.getElementById('image-modal');
-    if (modal) {
-        modal.classList.remove('active');
-    }
-}
-
-// 5. NAVEGACIÓN Y ATAJOS DE TECLADO PARA EXPONER
+// 4. NAVEGACIÓN FLUIDA POR TECLADO
 window.addEventListener('keydown', (e) => {
-    // Escape para cerrar modal
-    if (e.key === 'Escape') {
-        closeImageModal();
-        return;
-    }
-
-    // Tecla 'G' para alternar notas de orador
-    if (e.key === 'g' || e.key === 'G') {
-        toggleSpeakerNotes();
-        return;
-    }
-
-    // Teclas 1, 2, 3, 4 para saltar directo a cada parte
-    if (e.key === '1') { scrollToSection('seccion-1'); return; }
-    if (e.key === '2') { scrollToSection('seccion-2'); return; }
-    if (e.key === '3') { scrollToSection('seccion-4'); return; }
-    if (e.key === '4') { scrollToSection('seccion-6'); return; }
-
     const sections = document.querySelectorAll('.story-section');
     const scrollPos = window.scrollY;
 
@@ -258,7 +187,6 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 window.addEventListener('scroll', onScroll, { passive: true });
 
-// Arrancar inmediatamente
 initInstantLoading();
 window.addEventListener('DOMContentLoaded', () => {
     resizeCanvas();
