@@ -18,11 +18,11 @@ body {
 
 /* Glassmorphism para las tarjetas sobre el video */
 .glass-card {
-    background: rgba(10, 12, 16, 0.72);
+    background: rgba(10, 12, 16, 0.78);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
     border-radius: 20px;
     transition: transform 0.3s ease, border-color 0.3s ease;
 }
@@ -36,6 +36,58 @@ body {
     background: rgba(255, 255, 255, 0.04);
     border-left: 3px solid var(--lime-accent);
     border-radius: 0 10px 10px 0;
+}
+
+/* Contenedor de Imagen con Clic para Ampliar */
+.zoom-image-container {
+    cursor: zoom-in;
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(0, 0, 0, 0.45);
+    transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.zoom-image-container:hover {
+    border-color: rgba(216, 255, 143, 0.55);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.7);
+}
+
+.zoom-image-container img {
+    transition: transform 0.35s ease;
+}
+
+.zoom-image-container:hover img {
+    transform: scale(1.02);
+}
+
+.zoom-badge {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    color: #D8FF8F;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    pointer-events: none;
+}
+
+/* Lightbox modal para pantalla completa */
+#lightbox-modal {
+    display: none;
+}
+
+#lightbox-modal.active {
+    display: flex;
 }
 
 /* Canvas del Scrollytelling fijado */

@@ -151,8 +151,37 @@ function updateStageLabel(fraction) {
     }
 }
 
-// 4. NAVEGACIÓN FLUIDA POR TECLADO
+// 4. FUNCIONES DE AMPLIACIÓN DE IMÁGENES (LIGHTBOX)
+function openLightbox(src, caption) {
+    const modal = document.getElementById('lightbox-modal');
+    const img = document.getElementById('lightbox-img');
+    const cap = document.getElementById('lightbox-caption');
+    if (modal && img) {
+        img.src = src;
+        if (cap) cap.innerText = caption || '';
+        modal.classList.remove('hidden');
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeLightbox() {
+    const modal = document.getElementById('lightbox-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+}
+
+// 5. NAVEGACIÓN FLUIDA POR TECLADO
 window.addEventListener('keydown', (e) => {
+    // Cerrar imagen en pantalla completa con ESC
+    if (e.key === 'Escape') {
+        closeLightbox();
+        return;
+    }
+
     const sections = document.querySelectorAll('.story-section');
     const scrollPos = window.scrollY;
 
